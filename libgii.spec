@@ -11,7 +11,6 @@ Group:		System/Libraries
 URL:		http://www.ggi-project.org/
 Source0:	http://www.ggi-project.org/ftp/ggi/v2.1/%{name}-%{version}.src.tar.bz2
 BuildRequires:	X11-devel
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 LibGII is an input library developed by the GGI Project
