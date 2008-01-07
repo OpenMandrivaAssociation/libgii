@@ -1,12 +1,14 @@
-%define __libtoolize true
-%define major	1
-%define libname	%mklibname gii %{major}
+%define __libtoolize	true
+%define major		1
+%define libname		%mklibname gii %{major}
+%define develname	%mklibname gii -d
+%define staticname	%mklibname gii -s -d
 
 Summary:	A flexible library for input handling
 Name:		libgii
 Version:	1.0.2
-Release:	%mkrel 7
-License:	GPL
+Release:	%mkrel 8
+License:	MIT
 Group:		System/Libraries
 URL:		http://www.ggi-project.org/
 Source0:	http://www.ggi-project.org/ftp/ggi/v2.1/%{name}-%{version}.src.tar.bz2
@@ -39,27 +41,26 @@ Group:		System/Libraries
 This package contains the library needed to run programs dynamically
 linked with %{name}.
 
-%package -n	%{libname}-devel
+%package -n	%{develname}
 Summary:	Headers for developing programs that will use %{name}
 Group:		Development/Other
 Requires:	%{libname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
-# lib64gii2-devel conflicts with libgii0-devel too
-Conflicts:	libgii0-devel
-Conflicts:	%{_lib}gii0-devel
+Obsoletes:	%{mklibname gii 1 -d}
 
-%description -n	%{libname}-devel
+%description -n	%{develname}
 This package contains the headers that programmers will need to develop
 applications which will use %{name}.
 
-%package -n	%{libname}-static-devel
+%package -n	%{staticname}
 Summary:	Static libraries for developing programs that will use %{name}
 Group:		Development/Other
 Requires:	%{libname}-devel = %{version}-%{release}
 Provides:	%{name}-static-devel = %{version}-%{release}
 Obsoletes:	libgii0-static-devel = 0.9.1-2mdk
+Obsoletes:	%{mklibname gii 1 -d -s}
 
-%description -n	%{libname}-static-devel
+%description -n	%{staticname}
 This package contains the static libraries that programmers will need
 to develop applications which will use %{name}.
 
@@ -110,7 +111,7 @@ chrpath -d %{buildroot}%{_libdir}/ggi/input/*.so
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/*.so.%{major}*
 
-%files -n %{libname}-devel
+%files -n %{develname}
 %defattr(644,root,root,755)
 %dir %{_includedir}/ggi
 %dir %{_includedir}/ggi/input
@@ -124,6 +125,6 @@ chrpath -d %{buildroot}%{_libdir}/ggi/input/*.so
 %{_mandir}/man5/*
 
 
-%files -n %{libname}-static-devel
+%files -n %{staticname}
 %defattr(644,root,root,755)
 %{_libdir}/*.a
