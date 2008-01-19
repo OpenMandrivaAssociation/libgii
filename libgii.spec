@@ -7,7 +7,7 @@
 Summary:	A flexible library for input handling
 Name:		libgii
 Version:	1.0.2
-Release:	%mkrel 8
+Release:	%mkrel 9
 License:	MIT
 Group:		System/Libraries
 URL:		http://www.ggi-project.org/
@@ -55,7 +55,7 @@ applications which will use %{name}.
 %package -n	%{staticname}
 Summary:	Static libraries for developing programs that will use %{name}
 Group:		Development/Other
-Requires:	%{libname}-devel = %{version}-%{release}
+Requires:	%{develname} = %{version}-%{release}
 Provides:	%{name}-static-devel = %{version}-%{release}
 Obsoletes:	libgii0-static-devel = 0.9.1-2mdk
 Obsoletes:	%{mklibname gii 1 -d -s}
