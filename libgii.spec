@@ -7,7 +7,7 @@
 Summary:	A flexible library for input handling
 Name:		libgii
 Version:	1.0.2
-Release:	%mkrel 10
+Release:	%mkrel 11
 License:	MIT
 Group:		System/Libraries
 URL:		http://www.ggi-project.org/
