@@ -12,6 +12,7 @@ License:	MIT
 Group:		System/Libraries
 URL:		http://www.ggi-project.org/
 Source0:	http://www.ggi-project.org/ftp/ggi/v2.1/%{name}-%{version}.src.tar.bz2
+Patch0:		libgii-1.0.2-wformat.patch
 BuildRequires:	X11-devel
 %ifarch x86_86
 BuildRequires:	chrpath
@@ -66,6 +67,7 @@ to develop applications which will use %{name}.
 
 %prep
 %setup -q
+%patch0 -p1 -b .wformat
 
 %build
 %configure2_5x	--disable-debug \
