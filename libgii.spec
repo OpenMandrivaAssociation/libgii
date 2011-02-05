@@ -1,4 +1,3 @@
-%define __libtoolize	true
 %define major		1
 %define libname		%mklibname gii %{major}
 %define develname	%mklibname gii -d
@@ -7,16 +6,15 @@
 Summary:	A flexible library for input handling
 Name:		libgii
 Version:	1.0.2
-Release:	%mkrel 14
+Release:	%mkrel 15
 License:	MIT
 Group:		System/Libraries
 URL:		http://www.ggi-project.org/
 Source0:	http://www.ggi-project.org/ftp/ggi/v2.1/%{name}-%{version}.src.tar.bz2
 Patch0:		libgii-1.0.2-wformat.patch
-BuildRequires:	X11-devel
-%ifarch x86_86
+BuildRequires:	libx11-devel
+BuildRequires:	lib64xxf86dga-devel
 BuildRequires:	chrpath
-%endif
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -80,12 +78,10 @@ to develop applications which will use %{name}.
 
 %makeinstall_std
 
-%ifarch x86_86
-chrpath -d %{_bindir}/mhub
-chrpath -d %{_bindir}/xsendbut
+chrpath -d %{buildroot}%{_bindir}/mhub
+chrpath -d %{buildroot}%{_bindir}/xsendbut
 chrpath -d %{buildroot}%{_libdir}/libgii.so.%{major}*
 chrpath -d %{buildroot}%{_libdir}/ggi/input/*.so
-%endif
 
 %clean
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
@@ -110,6 +106,7 @@ chrpath -d %{buildroot}%{_libdir}/ggi/input/*.so
 %config(noreplace) %{_sysconfdir}/ggi/filter/mouse
 %config(noreplace) %{_sysconfdir}/ggi/libgii.conf
 %dir %{_sysconfdir}/ggi
+%dir %{_sysconfdir}/ggi/filter
 %dir %{_libdir}/ggi/input
 %dir %{_libdir}/ggi/filter
 
