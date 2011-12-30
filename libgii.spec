@@ -98,7 +98,9 @@ chrpath -d %{buildroot}%{_libdir}/ggi/input/*.so
 %defattr(644,root,root,755)
 %doc ChangeLog ChangeLog.1999 FAQ INSTALL INSTALL.autoconf NEWS README doc/README*
 %attr(755,root,root) %{_bindir}/*
+%if %{mdvver} <= 201100
 %{_libdir}/ggi/*/*.la
+%endif
 %{_libdir}/ggi/*/*.so
 %{_mandir}/man1/*
 %{_mandir}/man7/*
@@ -123,10 +125,11 @@ chrpath -d %{buildroot}%{_libdir}/ggi/input/*.so
 %{_includedir}/ggi/input/*.h
 %{_includedir}/ggi/internal/*.h
 %{_libdir}/*.so
+%if %{mdvver} <= 201100
 %{_libdir}/*.la
+%endif
 %{_mandir}/man3/*
 %{_mandir}/man5/*
-
 
 %files -n %{staticname}
 %defattr(644,root,root,755)
