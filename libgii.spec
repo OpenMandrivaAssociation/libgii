@@ -1,7 +1,6 @@
 %define major		1
 %define libname		%mklibname gii %{major}
 %define develname	%mklibname gii -d
-%define staticname	%mklibname gii -s -d
 
 Summary:	A flexible library for input handling
 Name:		libgii
@@ -12,10 +11,9 @@ Group:		System/Libraries
 URL:		http://www.ggi-project.org/
 Source0:	http://www.ggi-project.org/ftp/ggi/v2.1/%{name}-%{version}.src.tar.bz2
 Patch0:		libgii-1.0.2-wformat.patch
-BuildRequires:	libx11-devel
-BuildRequires:	libxxf86dga-devel
+BuildRequires:	pkgconfig(x11)
+BuildRequires:	pkgconfig(xxf86dga)
 BuildRequires:	chrpath
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 LibGII is an input library developed by the GGI Project
@@ -45,37 +43,26 @@ Summary:	Headers for developing programs that will use %{name}
 Group:		Development/Other
 Requires:	%{libname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
-Obsoletes:	%{mklibname gii 1 -d}
+Obsoletes:	%{_lib}gii1-devel
+Obsoletes:	%{_lib}gii1-static-devel %{_lib}gii-static-devel
 
 %description -n	%{develname}
 This package contains the headers that programmers will need to develop
 applications which will use %{name}.
 
-%package -n	%{staticname}
-Summary:	Static libraries for developing programs that will use %{name}
-Group:		Development/Other
-Requires:	%{develname} = %{version}-%{release}
-Provides:	%{name}-static-devel = %{version}-%{release}
-Obsoletes:	libgii0-static-devel = 0.9.1-2mdk
-Obsoletes:	%{mklibname gii 1 -d -s}
-
-%description -n	%{staticname}
-This package contains the static libraries that programmers will need
-to develop applications which will use %{name}.
-
 %prep
 %setup -q
-%patch0 -p1 -b .wformat
+%apply_patches
 
 %build
-%configure2_5x	--disable-debug \
-		--enable-static
+%configure2_5x \
+	--disable-debug \
+	--disable-static
 
 %make
 
 %install
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
-
+rm -rf %{buildroot}
 %makeinstall_std
 
 chrpath -d %{buildroot}%{_bindir}/mhub
@@ -83,41 +70,28 @@ chrpath -d %{buildroot}%{_bindir}/xsendbut
 chrpath -d %{buildroot}%{_libdir}/libgii.so.%{major}*
 chrpath -d %{buildroot}%{_libdir}/ggi/input/*.so
 
-%clean
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
- 
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
 %files
-%defattr(644,root,root,755)
-%doc ChangeLog ChangeLog.1999 FAQ INSTALL INSTALL.autoconf NEWS README doc/README*
+%doc ChangeLog ChangeLog.1999 FAQ INSTALL INSTALL.autoconf NEWS 
+%doc README doc/README*
+%config(noreplace) %{_sysconfdir}/ggi/filter/keytrans
+%config(noreplace) %{_sysconfdir}/ggi/filter/mouse
+%config(noreplace) %{_sysconfdir}/ggi/libgii.conf
+%dir %{_sysconfdir}/ggi
 %attr(755,root,root) %{_bindir}/*
+%dir %{_sysconfdir}/ggi/filter
+%dir %{_libdir}/ggi/input
+%dir %{_libdir}/ggi/filter
 %if %{mdvver} <= 201100
 %{_libdir}/ggi/*/*.la
 %endif
 %{_libdir}/ggi/*/*.so
 %{_mandir}/man1/*
 %{_mandir}/man7/*
-%config(noreplace) %{_sysconfdir}/ggi/filter/keytrans
-%config(noreplace) %{_sysconfdir}/ggi/filter/mouse
-%config(noreplace) %{_sysconfdir}/ggi/libgii.conf
-%dir %{_sysconfdir}/ggi
-%dir %{_sysconfdir}/ggi/filter
-%dir %{_libdir}/ggi/input
-%dir %{_libdir}/ggi/filter
 
 %files -n %{libname}
-%defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/*.so.%{major}*
 
 %files -n %{develname}
-%defattr(644,root,root,755)
 %dir %{_includedir}/ggi
 %dir %{_includedir}/ggi/input
 %dir %{_includedir}/ggi/internal
@@ -131,6 +105,3 @@ chrpath -d %{buildroot}%{_libdir}/ggi/input/*.so
 %{_mandir}/man3/*
 %{_mandir}/man5/*
 
-%files -n %{staticname}
-%defattr(644,root,root,755)
-%{_libdir}/*.a
