@@ -1,0 +1,32 @@
+Index: libgii-1.0.2/input/linux_mouse/input.c
+===================================================================
+--- libgii-1.0.2/input/linux_mouse/input.c
++++ libgii-1.0.2/input/linux_mouse/input.c	2009-05-20 16:03:45.000000000 +0200
+@@ -251,7 +251,7 @@
+ 				"        device may not work as expected\n");
+ #endif /* HAVE_TIOCMSET */
+ 		}
+-		if (dowarn) fprintf(stderr, serialfailstr);
++		if (dowarn) fputs(serialfailstr, stderr);
+ 	}
+ 
+ 	return 0;
+Index: libgii-1.0.2/input/lk201/input.c
+===================================================================
+--- libgii-1.0.2/input/lk201/input.c
++++ libgii-1.0.2/input/lk201/input.c	2009-05-20 16:10:53.000000000 +0200
+@@ -256,12 +256,12 @@
+ 		}
+ 		else 
+ 		{
+-			fprintf(stderr, tcsetattrfailstr);
++			fputs(tcsetattrfailstr, stderr);
+ 		}
+ 	} 
+ 	else 
+ 	{
+-		fprintf(stderr, tcgetattrfailstr);
++		fputs(tcgetattrfailstr, stderr);
+ 	}
+ 	
+ 	/* dump and characters currently in the buffer */
