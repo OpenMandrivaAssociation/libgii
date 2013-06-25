@@ -85,6 +85,7 @@ chrpath -d %{buildroot}%{_libdir}/ggi/input/*.so
 
 %files -n %{libname}
 %{_libdir}/libgii.so.%{major}*
+%{_libdir}/libgg.so.%{major}*
 
 %files -n %{devname}
 %dir %{_includedir}/ggi
