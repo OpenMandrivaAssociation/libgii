@@ -5,7 +5,7 @@
 Summary:	A flexible library for input handling
 Name:		libgii
 Version:	1.0.2
-Release:	24
+Release:	25
 License:	MIT
 Group:		System/Libraries
 Url:		http://www.ggi-project.org/
