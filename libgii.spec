@@ -2,6 +2,8 @@
 %define libname	%mklibname gii %{major}
 %define devname	%mklibname gii -d
 
+%define _disable_lto 1
+
 Summary:	A flexible library for input handling
 Name:		libgii
 Version:	1.0.2
