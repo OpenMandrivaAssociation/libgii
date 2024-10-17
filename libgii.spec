@@ -10,7 +10,7 @@ Version:	1.0.2
 Release:	35
 License:	MIT
 Group:		System/Libraries
-Url:		http://www.ggi-project.org/
+Url:		https://www.ggi-project.org/
 Source0:	http://www.ggi-project.org/ftp/ggi/v2.1/%{name}-%{version}.src.tar.bz2
 Patch0:		libgii-1.0.2-wformat.patch
 BuildRequires:	chrpath
